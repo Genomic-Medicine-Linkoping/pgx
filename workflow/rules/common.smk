@@ -35,8 +35,8 @@ validate(config, schema="../schemas/resources.schema.yaml")
 samples = pd.read_table(config["samples"], dtype=str).set_index("sample", drop=False)
 validate(samples, schema="../schemas/samples.schema.yaml")
 
-design = pd.read_table(config.get("padd_target_regions", {}).get("target_regions", ""), dtype=str, index_col=0)
-
+design = pd.read_table(config.get("padd_target_regions", {}).get("target_regions", ""), dtype=str, index_col=0, names=["start","end","annotation"])
+print(design)
 ### Read and validate units file
 
 units = (
@@ -58,7 +58,8 @@ def get_choromosomes(genomic_regions: pd.DataFrame) -> typing.List[str]:
     Returns:
         typing.List[str]: List of strings with all unique chromosomes found in regions
     """
-    return list(set([f"chr{str(region.Index)}" for region in genomic_regions.itertuples()]))
+    return list(set([f"{str(region.Index)}" for region in genomic_regions.itertuples()]))
+    # return list(set([f"chr{str(region.Index)}" for region in genomic_regions.itertuples()]))
 
 
 ### Set wildcard constraints
@@ -91,4 +92,5 @@ def compile_output_list(wildcards):
         for t in get_unit_types(units, sample)
         for c in get_choromosomes(design)
     ]
+    print(output_files)
     return output_files

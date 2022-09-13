@@ -4,3 +4,17 @@ __pycache__
 describe_workflow.rst
 describe_jupyter_notebook.txt
 pgx
+
+.coverage
+.editorconfig
+.prettierignore
+.prettierrc.yml
+env.yml
+Makefile
+snv_indels
+temp
+.vscode
+.*_cache
+alignment/bwa_mem/*
+alignment/picard_mark_duplicates
+alignment/samtools_extract_reads
