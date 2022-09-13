@@ -9,8 +9,6 @@ pgx
 .editorconfig
 .prettierignore
 .prettierrc.yml
-env.yml
-Makefile
 snv_indels
 temp
 .vscode
