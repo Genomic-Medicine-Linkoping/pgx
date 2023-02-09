@@ -12,6 +12,10 @@ padd_target_regions:
   target_regions: "reference/exons_variants_pharmacogenomics.TPMT.bed"
   padding: 100
 
+get_padded_bed:
+  target_regions: "reference/exons_variants_pharmacogenomics.TPMT.bed"
+  padding: 100
+
 picard_mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.0"
 
@@ -55,6 +59,9 @@ get_clinical_guidelines:
   haplotype_activity: "reference/haplotype_activity_score.csv"
   clinical_guidelines: "reference/clinical_guidelines.csv"
   hidden_haplotypes: "reference/hidden_haplotypes.csv"
+
+get_interaction_guidelines:
+    interaction_guidelines: "data/guidelines/interaction_guidelines.csv"
 
 reference:
   design_bed: "reference/exons_variants_pharmacogenomics.TPMT.bed"

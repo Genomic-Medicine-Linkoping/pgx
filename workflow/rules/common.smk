@@ -35,7 +35,8 @@ validate(config, schema="../schemas/resources.schema.yaml")
 samples = pd.read_table(config["samples"], dtype=str).set_index("sample", drop=False)
 validate(samples, schema="../schemas/samples.schema.yaml")
 
-design = pd.read_table(config.get("padd_target_regions", {}).get("target_regions", ""), dtype=str, index_col=0)
+# design = pd.read_table(config.get("padd_target_regions", {}).get("target_regions", ""), dtype=str, index_col=0)
+design = pd.read_table(config.get("get_padded_bed", {}).get("target_regions", ""), dtype=str, index_col=0)
 
 ### Read and validate units file
 
@@ -71,7 +72,8 @@ wildcard_constraints:
 
 
 def compile_output_list(wildcards):
-    output_files = ["pgx/padd_target_regions/padded_bait_interval.bed"]
+    # output_files = ["pgx/padd_target_regions/padded_bait_interval.bed"]
+    output_files = ["pgx/get_padded_bed/padded_bait_interval.bed"]
     output_files += ["pgx/get_padded_baits/padded_bait_interval.list"]
     output_files += [
         "alignment/samtools_extract_reads/%s_%s_%s.bam" % (sample, t, c)
@@ -130,6 +132,12 @@ def compile_output_list(wildcards):
     ]
     output_files += [
         "pgx/get_clinical_guidelines/%s_%s_%s.output.csv" % (sample, t, c)
+        for sample in get_samples(samples)
+        for t in get_unit_types(units, sample)
+        for c in get_choromosomes(design)
+    ]
+    output_files += [
+        "pgx/get_interaction_guidelines/%s_%s_%s.output.csv" % (sample, t, c)
         for sample in get_samples(samples)
         for t in get_unit_types(units, sample)
         for c in get_choromosomes(design)
